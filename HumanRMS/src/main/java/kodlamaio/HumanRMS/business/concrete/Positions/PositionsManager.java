@@ -27,13 +27,13 @@ public class PositionsManager implements PositionsService{
 	@Override
 	public DataResult<List<Positions>> getAll() {
 		return new SuccessDataResult<List<Positions>>
-		(this.positionsDao.findAll() , "Data listelendi");
+		(this.positionsDao.findAll() , "Data listed");
 	}
 
 	@Override
 	public Result add(Positions positions) {
 		this.positionsDao.save(positions);
-		return new SuccessResult("Ürün eklendi");
+		return new SuccessResult("Positions added to system");
 	}
 
 }

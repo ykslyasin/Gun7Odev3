@@ -1,21 +1,17 @@
 package kodlamaio.HumanRMS.core.adapters;
 
-import java.rmi.RemoteException;
+import kodlamaio.HumanRMS.business.abstracts.Employee.EmployeeMernisCheckService;
+import kodlamaio.HumanRMS.core.utilities.results.Result;
+import kodlamaio.HumanRMS.core.utilities.results.SuccessResult;
 import kodlamaio.HumanRMS.entities.concrete.Employees;
-import tr.gov.nvi.tckimlik.WS.KPSPublicSoapProxy;
 
 public class EmployeeMernisServiceAdapter implements EmployeeMernisCheckService{
 
-	@SuppressWarnings("deprecation")
+
 	@Override
-	public boolean CheckIfRealPerson(Employees employees) throws RemoteException {
-		KPSPublicSoapProxy proxy = new KPSPublicSoapProxy();
-		return proxy.TCKimlikNoDogrula(employees.getNationalId() , 
-									   employees.getFirstName() , 
-									   employees.getLastName() , 
-									   employees.getBirthDate().getYear());
+	public Result CheckIfRealPerson(Employees employees){
+		return new SuccessResult();
 	}
-
-
-
+	
+	
 }

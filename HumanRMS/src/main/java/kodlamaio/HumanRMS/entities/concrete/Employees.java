@@ -1,6 +1,6 @@
 package kodlamaio.HumanRMS.entities.concrete;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +11,6 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -19,13 +18,21 @@ import lombok.NoArgsConstructor;
 @Table(name="employees")
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper=false)
-public class Employees extends User{
+public class Employees {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="user_id")
-	private int userId;
+	@Column(name="id")
+	private int id;
+	
+	@Column(name="password")
+	private String password;
+	
+	@Column(name="password_compare")
+	private String passwordCompare;
+	
+	@Column(name="email")
+	private String eMail;
 	
 	@Column(name="first_name")
 	private String firstName;
@@ -37,5 +44,5 @@ public class Employees extends User{
 	private long nationalId;
 	
 	@Column(name="birth_date")
-	private Date birthDate;
+	private String birthDate;
 }

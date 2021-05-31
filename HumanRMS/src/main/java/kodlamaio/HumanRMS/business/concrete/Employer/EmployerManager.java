@@ -1,9 +1,7 @@
 package kodlamaio.HumanRMS.business.concrete.Employer;
 
-import java.rmi.RemoteException;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kodlamaio.HumanRMS.business.abstracts.Employer.EmployerService;
@@ -13,40 +11,45 @@ import kodlamaio.HumanRMS.core.utilities.results.Result;
 import kodlamaio.HumanRMS.core.utilities.results.SuccessDataResult;
 import kodlamaio.HumanRMS.core.utilities.results.SuccessResult;
 import kodlamaio.HumanRMS.dataAccess.abstracts.EmployerDao;
-import kodlamaio.HumanRMS.entities.concrete.Employer;
+import kodlamaio.HumanRMS.entities.concrete.Employers;
 
 @Service
 public class EmployerManager implements EmployerService{
 	
 	private EmployerDao employerDao;
-	private EmployerCheckManager employerCheckManager;
 	
-	@Autowired
-	public EmployerManager(EmployerDao employerDao , EmployerCheckManager employerCheckManager) {
-		super();
+	public EmployerManager(EmployerDao employerDao) {
 		this.employerDao = employerDao;
-		this.employerCheckManager = employerCheckManager;
+	}
+	
+	public Result registration(Employers employers) {
+		if(checkEmployer(employers.getEMail()).isSuccess()) {
+			add(employers);
+			return new SuccessResult("Registration successful.");
+			
+		}else {
+			return new ErrorResult("Registration failed. This email already registered.");
+		}
 	}
 
 	@Override
-	public DataResult<List<Employer>> getAll() {
-		return new SuccessDataResult<List<Employer>>
+	public DataResult<List<Employers>> getAll() {
+		return new SuccessDataResult<List<Employers>>
 		(this.employerDao.findAll() , "Data listed");
 	}
 
 	@Override
-	public Result add(Employer employer) {
-		this.employerDao.save(employer);
-		return new SuccessResult("Employer added to system\n");
+	public Result add(Employers employers) {
+		this.employerDao.save(employers);
+		return new SuccessResult("Employer added to system");
 	}
-
-	@Override
-	public Result registration(Employer employer) throws RemoteException {
-		if(employerCheckManager.checkUser(employer).isSuccess()) {
-			add(employer);
-			return new SuccessResult("Registration successful");
+	
+	public Result checkEmployer(String email) {
+		if(employerDao.getByeMail(email).isEmpty()) {
+			return new SuccessResult();
 		}
-		return new ErrorResult("Registraion Failed");
+		return new ErrorResult("This email registered already");
 	}
+	
 
 }

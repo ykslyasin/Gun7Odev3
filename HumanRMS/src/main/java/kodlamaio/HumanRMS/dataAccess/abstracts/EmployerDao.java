@@ -1,9 +1,11 @@
 package kodlamaio.HumanRMS.dataAccess.abstracts;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import kodlamaio.HumanRMS.entities.concrete.Employer;
+import java.util.List;
 
-public interface EmployerDao extends JpaRepository<Employer, Integer>{
+import org.springframework.data.jpa.repository.JpaRepository;
+import kodlamaio.HumanRMS.entities.concrete.Employers;
+
+public interface EmployerDao extends JpaRepository<Employers, Integer>{
 	
-	boolean existingEmployer(String email);
+	List<Employers> getByeMail(String eMail);
 }
