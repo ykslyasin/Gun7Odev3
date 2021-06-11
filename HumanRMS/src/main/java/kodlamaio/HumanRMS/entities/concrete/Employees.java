@@ -1,38 +1,31 @@
 package kodlamaio.HumanRMS.entities.concrete;
 
-import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import kodlamaio.HumanRMS.entities.concrete.cv.Cv;
 
 @Data
 @Entity
 @Table(name="employees")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Employees {
+@EqualsAndHashCode(callSuper=false)
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","cv"})
+public class Employees extends User{
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
-	private int id;
-	
-	@Column(name="password")
-	private String password;
-	
-	@Column(name="password_compare")
-	private String passwordCompare;
-	
-	@Column(name="email")
-	private String eMail;
+	@Column(name="employee_id")
+	private int employeeId;
 	
 	@Column(name="first_name")
 	private String firstName;
@@ -45,4 +38,9 @@ public class Employees {
 	
 	@Column(name="birth_date")
 	private String birthDate;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "employees")
+	private List<Cv> cv;
+	
 }
